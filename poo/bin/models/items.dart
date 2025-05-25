@@ -1,31 +1,32 @@
-abstract class item{
+abstract class Item{
   String name;
   String description;
 
+  Item(this.name, this.description);
 }
 
-class consumables extends items{
-  int effectstrenght;
-  String effecttype;
+class Consumable extends Item{
+  int effectStrength;
+  String effectType;
 
+  Consumable(String name, String description, this.effectStrength, this.effectType) : super(name, description);
 }
 
 
-class weapon extends items{
+class Weapon extends Item{
   int damage;
-  String damagetype;
+  String damageType;
 
+  Weapon(String name, String description, this.damage, this.damageType) : super(name, description);
 }
 
-class mele extends weapon{
+class Melee extends Weapon{
+// TO-DO
 
+  Melee(String name, String description, int damage, String damageType) : super(name, description, damage, damageType);
 }
 
-class ranged extends weapon{
-
-}
-
-
-void main(){
-   print("Teste");
+class Ranged extends Weapon{
+// TO-DO
+  Ranged(String name, String description, int damage, String damageType) : super(name, description, damage, damageType);
 }
