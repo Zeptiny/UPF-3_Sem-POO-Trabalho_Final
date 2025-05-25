@@ -1,32 +1,32 @@
 abstract class Item{
-  String name;
-  String description;
+  String _name;
+  String _description;
 
-  Item(this.name, this.description);
+  Item(this._name, this._description);
 }
 
 class Consumable extends Item{
-  int effectStrength;
-  String effectType;
+  int _effectStrength;
+  String _effectType;
 
-  Consumable(String name, String description, this.effectStrength, this.effectType) : super(name, description);
+  Consumable(String _name, String _description, this._effectStrength, this._effectType) : super(_name, _description);
 }
 
 
 class Weapon extends Item{
-  int damage;
-  String damageType;
+  int _damage;
+  String _damageType;
 
-  Weapon(String name, String description, this.damage, this.damageType) : super(name, description);
+  Weapon(String _name, String _description, this._damage, this._damageType) : super(_name, _description);
 }
 
 class Melee extends Weapon{
 // TO-DO
 
-  Melee(String name, String description, int damage, String damageType) : super(name, description, damage, damageType);
+  Melee(String _name, String _description, int _damage, String _damageType) : super(_name, _description, _damage, _damageType);
 }
 
 class Ranged extends Weapon{
 // TO-DO
-  Ranged(String name, String description, int damage, String damageType) : super(name, description, damage, damageType);
+  Ranged(String _name, String _description, int _damage, String _damageType) : super(_name, _description, _damage, _damageType);
 }
