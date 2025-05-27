@@ -1,4 +1,5 @@
 import 'dart:io';
+import './mocks/mockLevel.dart';
 
 import 'models/entities.dart';
 
@@ -13,4 +14,9 @@ void main(List<String> arguments) {
 
   // Level, vida e sprite padrão por enquanto
   Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)");
+
+  // Main loopino
+  for (var level in levels) {
+    // To-Do
+  }
 }
