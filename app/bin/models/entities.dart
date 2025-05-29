@@ -14,25 +14,12 @@ abstract class Entity{
   //Entity(this._name, this._description, this._health, this._level, this._sprite, this._actions);
 
   // Getters
-  String getName(){
-    return _name;
-  }
 
-  String getDescription(){
-    return _description;
-  }
-
-  int getHealth(){
-    return _health;
-  }
-
-  int getLevel(){
-    return _level;
-  }
-
-  String getSprite(){
-    return _sprite;
-  }
+  get name => this._name;
+  get description => this._description;
+  get health => this._health;
+  get level => this._level;
+  get sprite => this._sprite;
 
   // List<Action> getActions(){
   //   return _actions;
