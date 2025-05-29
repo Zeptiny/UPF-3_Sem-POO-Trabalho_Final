@@ -18,7 +18,7 @@ abstract class Action {
 class ActionAttack extends Action {
   int _damage;
 
-  ActionAttack(String name, this._damage) : super(name);
+  ActionAttack(super._name, this._damage);
 
   void execute(Entity hero, Entity target) {
     // Conferir o dano da arma do heroi
@@ -32,7 +32,7 @@ class ActionAttack extends Action {
 class ActionParry extends Action {
   int _blockChance;
 
-  ActionParry(String name, this._blockChance) : super(name);
+  ActionParry(super._name, this._blockChance);
 
   void execute(Entity hero, Entity target) {
     // Precisa de um alvo?
@@ -45,7 +45,7 @@ class ActionBlowAttack extends Action {
   int _damage;
   int _chanceToStun;
 
-  ActionBlowAttack(String name, this._damage, this._chanceToStun) : super(name);
+  ActionBlowAttack(super._name, this._damage, this._chanceToStun);
 
   void execute(Entity hero, Entity target) {
     // Precisa de um alvo?
