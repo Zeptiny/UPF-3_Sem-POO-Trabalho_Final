@@ -2,6 +2,7 @@ import 'dart:io';
 import './mocks/mockLevel.dart';
 
 import 'models/entities.dart';
+import 'models/actions.dart';
 
 void main(List<String> arguments) {
   print("Qual o nome do herói? ");
@@ -13,7 +14,8 @@ void main(List<String> arguments) {
   String description = inDescription ?? 'default';
 
   // Level, vida e sprite padrão por enquanto
-  Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)");
+  // Ações padrões são: attack, parry e blow
+  Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)", [ActionAttack("Attack", 5), ActionBlowAttack("Blow Attack", 3, 70), ActionParry("Parry", 50),]);
 
   // Main loopino
   bool heroNextRound = true; // 1 = Hero; 0 = Enemy;
