@@ -22,6 +22,7 @@ abstract class Entity{
   get health => this._health;
   get level => this._level;
   get sprite => this._sprite;
+  get actions => this._actions;
 
   // List<Action> getActions(){
   //   return _actions;

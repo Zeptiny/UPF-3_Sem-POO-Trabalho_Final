@@ -10,6 +10,8 @@ import 'entities.dart';
 abstract class Action {
   String _name;
 
+  get name => this._name;
+
   Action(this._name);
 
   void execute(Entity hero, Entity target);

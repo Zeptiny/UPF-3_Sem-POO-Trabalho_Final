@@ -18,7 +18,7 @@ void main(List<String> arguments) {
   Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)", [ActionAttack("Attack", 5), ActionBlowAttack("Blow Attack", 3, 70), ActionParry("Parry", 50),]);
 
   // Main loopino
-  bool heroNextRound = true; // 1 = Hero; 0 = Enemy;
+  bool heroNextRound = true;
   for (var level in levels) {
     print(level.name);
     print(level.description);
@@ -34,8 +34,38 @@ void main(List<String> arguments) {
     while(true){
       if(heroNextRound){
         // Mostrar o menu de ações para o heroi
-        print("TO-DO");
-        break;
+        List<Action> actions = hero.actions;
+        int acNum = 1;
+        for (var ac in actions){
+          print("$acNum - ${ac.name}");
+          acNum++;
+        }
+
+        while(true){
+          String? acSelectionIn = stdin.readLineSync(); // Pega a string com a seleção do número
+          if (acSelectionIn == null) {
+            print("Seleção inválida!"); continue;
+          }
+
+          if (int.tryParse(acSelectionIn) == null) {
+            print("Seleção inválida!"); continue;
+          }
+
+          int acSelection = int.parse(acSelectionIn);
+          acSelection--; // 0 indexed list
+            
+          if (acSelection >= acNum) {
+            print("Seleção inválida!"); continue;
+          }
+
+          Action acSelected = actions[acNum];
+
+          // TO-DO, refazer as ações
+          // Não faz sentido a ação ter o execute com o Hero e alvo
+          // Talvez fazer algum execute na própria entidade com o indice da ação e qual o alvo?
+
+          break;
+        }
       } else {
         // Inimigo deve realizar uma ação aleatória, baseada nas opções dadas a ele
         print("TO-DO");
