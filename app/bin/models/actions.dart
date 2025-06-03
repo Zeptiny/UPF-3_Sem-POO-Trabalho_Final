@@ -14,7 +14,7 @@ abstract class Action {
 
   Action(this._name);
 
-  void execute(Entity hero, Entity target);
+  void execute(Entity target);
 }
 
 class ActionAttack extends Action {
@@ -22,7 +22,7 @@ class ActionAttack extends Action {
 
   ActionAttack(super._name, this._damage);
 
-  void execute(Entity hero, Entity target) {
+  void execute(Entity target) {
     // Conferir o dano da arma do heroi
     // Diminuir a vida do alvo
     // ?!?!?!
@@ -36,7 +36,7 @@ class ActionParry extends Action {
 
   ActionParry(super._name, this._blockChance);
 
-  void execute(Entity hero, Entity target) {
+  void execute(Entity target) {
     // Precisa de um alvo?
     // Como vamos checar isso realmente?
   }
@@ -49,7 +49,7 @@ class ActionBlowAttack extends Action {
 
   ActionBlowAttack(super._name, this._damage, this._chanceToStun);
 
-  void execute(Entity hero, Entity target) {
+  void execute(Entity target) {
     // Precisa de um alvo?
     // Como vamos checar isso realmente?
   }

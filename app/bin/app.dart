@@ -58,7 +58,7 @@ void main(List<String> arguments) {
             print("Seleção inválida!"); continue;
           }
 
-          Action acSelected = actions[acNum];
+          hero.actions[acSelection].execute(level.enemies[0]); // Alterar para o inimigo
 
           // TO-DO, refazer as ações
           // Não faz sentido a ação ter o execute com o Hero e alvo
