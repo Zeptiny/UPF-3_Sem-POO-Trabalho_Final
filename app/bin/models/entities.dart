@@ -3,7 +3,7 @@ import 'actions.dart';
 // tipo? inicia o tipo como null
 // _ antes do nome inicia como privado
 abstract class Entity {
-  String _name; // Daria para setar como final?
+  final String _name; // Daria para setar como final?
   String _description;
   int _health = 0;
   int _level = 0;
