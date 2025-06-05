@@ -14,21 +14,35 @@ abstract class Action {
 
   Action(this._name);
 
-  void execute(Entity target);
+
+  //modificação agora recebe quem executa e e o alvo ++
+  void execute(Entity self, Entity target);
 }
 
-class ActionAttack extends Action {
-  int _damage;
+ class ActionAttack extends Action {
+  // Não precisamos de um _damage aqui, pois o dano será passado via damageOverride
+  ActionAttack(super.name); // Construtor simples
 
-  ActionAttack(super._name, this._damage);
+  @override 
+  void execute(Entity self, Entity target, {int? damageOverride}) { //para ser mais facíl de aplicar o dano, recebe dano, aplicar dano
+    int finalDamage = 0; // Inicializa a variável para o dano final
 
-  void execute(Entity target) {
-    // Conferir o dano da arma do heroi
-    // Diminuir a vida do alvo
-    // ?!?!?!
-    // Stonks
+    if (damageOverride != null) {
+      // Se um dano foi explicitamente passado (calculado pelo CombatSystem)
+      finalDamage = damageOverride;
+      print('${self.name} ataca causando $finalDamage de dano!');
+    } else {
+     
+      finalDamage = 5; // Dano padrão caso não seja fornecido ou a entidade não tenha 'attackPower'
+      print('${self.name} realiza um ataque básico causando $finalDamage de dano!');
+    }
+
+    target.takeDamage(finalDamage);
+    print('${target.name} tomou $finalDamage de dano. Vida restante: ${target.health}/${target.maxHealth}'); //precisa declarar um getter?
   }
-}
+
+  }
+
 
 // Negar ou diminuir o dano que está recebendo
 class ActionParry extends Action {

@@ -6,6 +6,7 @@ abstract class Entity {
   final String _name; // Daria para setar como final?
   String _description;
   int _health = 0;
+  int _maxHealth;
   int _level = 0;
   String _sprite; // ASCII da entidade para aparecer no terminal
   List<Action>
@@ -18,10 +19,12 @@ abstract class Entity {
     this._name,
     this._description,
     this._health,
+    int initialHealth,
     this._level,
     this._sprite,
     this._actions,
   );
+  
   //Entity(this._name, this._description, this._health, this._level, this._sprite, this._actions);
 
   // Getters
