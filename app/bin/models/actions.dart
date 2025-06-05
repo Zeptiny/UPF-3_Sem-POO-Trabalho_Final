@@ -9,14 +9,16 @@ import 'entities.dart';
 
 abstract class Action {
   String _name;
+  Entity? _executingEntity;
 
   get name => this._name;
 
+  set setEntity(Entity e) => this._executingEntity = e;
+
   Action(this._name);
 
-
   //modificação agora recebe quem executa e e o alvo ++
-  void execute(Entity self, Entity target);
+  void execute(Entity target);
 }
 
  class ActionAttack extends Action {
@@ -24,20 +26,22 @@ abstract class Action {
   ActionAttack(super.name); // Construtor simples
 
   @override 
-  void execute(Entity self, Entity target, {int? damageOverride}) { //para ser mais facíl de aplicar o dano, recebe dano, aplicar dano
+  void execute(Entity target, {int? damageOverride}) { //para ser mais facíl de aplicar o dano, recebe dano, aplicar dano
     int finalDamage = 0; // Inicializa a variável para o dano final
 
     if (damageOverride != null) {
       // Se um dano foi explicitamente passado (calculado pelo CombatSystem)
       finalDamage = damageOverride;
-      print('${self.name} ataca causando $finalDamage de dano!');
+      print('${this._executingEntity?.name} ataca causando $finalDamage de dano!');
     } else {
      
       finalDamage = 5; // Dano padrão caso não seja fornecido ou a entidade não tenha 'attackPower'
-      print('${self.name} realiza um ataque básico causando $finalDamage de dano!');
+      print('${this._executingEntity?.name} realiza um ataque básico causando $finalDamage de dano!');
     }
 
     target.takeDamage(finalDamage);
+
+    // target.takeDamage(finalDamage);
     print('${target.name} tomou $finalDamage de dano. Vida restante: ${target.health}/${target.maxHealth}'); //precisa declarar um getter?
   }
 
@@ -48,7 +52,7 @@ abstract class Action {
 class ActionParry extends Action {
   int _blockChance;
 
-  ActionParry(super._name, this._blockChance);
+  ActionParry(String _name, this._blockChance) : super(_name);
 
   void execute(Entity target) {
     // Precisa de um alvo?

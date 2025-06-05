@@ -17,11 +17,13 @@ void main(List<String> arguments) {
 
   // Level, vida e sprite padrão por enquanto
   // Ações padrões são: attack, parry e blow
-  Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)", [
-    ActionAttack("Attack", 5),
+  Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)", []);
+  hero.setActions = [
+    ActionAttack("Attack"),
     ActionBlowAttack("Blow Attack", 3, 70),
     ActionParry("Parry", 50),
-  ]);
+  ];
+
 
   // Main loopino
   bool heroNextRound = true;

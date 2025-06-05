@@ -19,7 +19,7 @@ abstract class Entity {
     this._name,
     this._description,
     this._health,
-    int initialHealth,
+    this._maxHealth,
     this._level,
     this._sprite,
     this._actions,
@@ -35,18 +35,17 @@ abstract class Entity {
   get level => this._level;
   get sprite => this._sprite;
   get actions => this._actions;
+  get maxHealth => this._maxHealth;
 
-  // List<Action> getActions(){
-  //   return _actions;
-  // }
+  set setActions(List<Action> actions) {
+    for (Action a in actions){
+      a.setEntity = this;
+      this._actions += [a];
+    }
+  }
 
-  // Setters
-  // TO-DO
-
-  // Methods https://dart.dev/language/methods
-  void takeDamage(int damage) {
-    _health -= damage;
-    // Fazer a entidade morrer, TO-DO
+  void takeDamage(int damage){
+    this._health -= damage;
   }
 }
 
@@ -66,7 +65,7 @@ class Hero extends Entity {
     int level,
     String sprite,
     List<Action> actions,
-  ) : super.full(name, description, health, level, sprite, actions);
+  ) : super.full(name, description, health, health, level, sprite, actions);
 }
 
 class Enemy extends Entity {
@@ -80,7 +79,7 @@ class Enemy extends Entity {
     int level,
     String sprite,
     List<Action> actions,
-  ) : super.full(name, description, health, level, sprite, actions);
+  ) : super.full(name, description, health, health, level, sprite, actions);
 
   // Getters
   String getType() {
