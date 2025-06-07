@@ -1,6 +1,8 @@
 import 'dart:io';
 import './mocks/mockLevel.dart';
 
+import 'dart:math'; 
+
 import 'models/entities.dart';
 import 'models/actions.dart';
 
@@ -13,7 +15,7 @@ void main(List<String> arguments) {
   print("Qual seria a história de $name?");
   String? inDescription = stdin.readLineSync();
   String description = inDescription ?? 'default';
-  print(""); // New Line
+  print(""); // New Line 
 
   // Level, vida e sprite padrão por enquanto
   // Ações padrões são: attack, parry e blow
@@ -24,7 +26,7 @@ void main(List<String> arguments) {
     ActionParry("Parry", 50),
   ];
 
-
+ 
   // Main loopino
   bool heroNextRound = true;
   for (var level in levels) {
@@ -43,6 +45,20 @@ void main(List<String> arguments) {
 
     // Iniciar o combate
     while (true) {
+        //verefica a vida do heroi antes do combate
+       if (!hero.isAlive) {
+        print("${hero.name} foi derrotado!");
+        print("Fim de jogo!");
+        return;
+      }
+      //verefica a vida do inimigo
+        if (!level.enemies[0].isAlive) {
+        print("${level.enemies[0].name} foi derrotado!");
+        print("Você venceu o combate contra ${level.enemies[0].name}!");
+        break; // Isso quebra o while(true) de COMBATE, fazendo o for loop avançar
+      }
+
+
       if (heroNextRound) {
         // Mostrar o menu de ações para o heroi
         List<Action> actions = hero.actions;
@@ -73,20 +89,81 @@ void main(List<String> arguments) {
             continue;
           }
 
+
+          //PARRY ACTIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          Action selectedAction = hero.actions[acSelection]; // Pega a ação selecionada
+
+
+
+          if (selectedAction is ActionParry) {
+            var rng = Random();
+            int minEnemyDamage = 1;
+            int maxEnemyDamage = 4;
+            int potentialDamage = minEnemyDamage + rng.nextInt(maxEnemyDamage - minEnemyDamage + 1);
+
+            selectedAction.execute(level.enemies[0], incomingDamage: potentialDamage);
+
+            heroNextRound = true;
+          } else {
+            selectedAction.execute(level.enemies[0]);
+            heroNextRound = false;
+          }
+
+          if (!level.enemies[0].isAlive) {
+              print("${level.enemies[0].name} foi derrotado!");
+              print("Você venceu o combate contra ${level.enemies[0].name}!");
+              break;
+          }
+
+          break;
+
+
+
+
+          /*
+
+          VOU ALTERAR ISSO AQUI , VOCÊ ve como ficou
+
+
           hero.actions[acSelection].execute(
             level.enemies[0],
           ); // Alterar para o inimigo
+          */
 
           // TO-DO, refazer as ações
           // Não faz sentido a ação ter o execute com o Hero e alvo
           // Talvez fazer algum execute na própria entidade com o indice da ação e qual o alvo?
 
-          break;
+          
         }
-      } else {
-        // Inimigo deve realizar uma ação aleatória, baseada nas opções dadas a ele
-        print("TO-DO");
-        break;
+      } else { //Ataque do inimigo -- Testes
+        //turno inimigo
+        print("Inimigo ataca!");
+        print("Turno do Inimigo: ${level.enemies[0].name}");
+        var random =  Random();
+
+        int MinenemyDamage = 1;
+        int MaxenemyDamage = 4;
+
+        // Gera um número aleatório entre minEnemyDamage e maxEnemyDamage 
+        int randomDamage = MinenemyDamage + random.nextInt(MaxenemyDamage - MinenemyDamage + 1);
+
+        // O inimigo (level.enemies[0]) usa sua primeira ação (assumindo que é um ataque)
+        // contra o herói (hero), passando o dano aleatório.
+        level.enemies[0].actions[0].execute(hero, damageOverride: randomDamage);
+        //ver vida atual
+      //não esta mostrando o hp?
+      print("${hero.name} HP: ${hero.health}/${hero.maxHealth}");
+      print("");
+
+        if (!hero.isAlive) {
+          print("${hero.name} foi derrotado por ${level.enemies[0].name}!");
+          print("Fim de jogo!");
+          return; // Termina o programa
+        }
+
+        heroNextRound = true; // Passa a vez de volta para o herói
+
       }
     }
 

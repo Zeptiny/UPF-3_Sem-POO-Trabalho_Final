@@ -46,7 +46,13 @@ abstract class Entity {
 
   void takeDamage(int damage){
     this._health -= damage;
+    if(this._health <= 0){ //para quando der zero o bichao morrer né 
+      this._health = 0;
+      print("Você venceu!");
+    }
   }
+
+  bool get isAlive => this._health > 0; //vereficar se o biao ta morto
 }
 
 // https://dart.dev/language/extend

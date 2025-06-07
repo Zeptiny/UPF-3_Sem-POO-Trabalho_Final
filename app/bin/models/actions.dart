@@ -1,4 +1,5 @@
 import 'entities.dart';
+import 'dart:math';
 
 // OBSERVAÇÕES
 
@@ -36,13 +37,14 @@ abstract class Action {
     } else {
      
       finalDamage = 5; // Dano padrão caso não seja fornecido ou a entidade não tenha 'attackPower'
-      print('${this._executingEntity?.name} realiza um ataque básico causando $finalDamage de dano!');
+      print('${this._executingEntity?.name} usou um ataque básico causando $finalDamage de dano!\n');
     }
 
     target.takeDamage(finalDamage);
 
     // target.takeDamage(finalDamage);
-    print('${target.name} tomou $finalDamage de dano. Vida restante: ${target.health}/${target.maxHealth}'); //precisa declarar um getter?
+    print('Situação: \n');
+    print('${target.name} tomou $finalDamage de dano. Vida restante: ${target.health}/${target.maxHealth}\n'); //precisa declarar um getter?
   }
 
   }
@@ -50,13 +52,44 @@ abstract class Action {
 
 // Negar ou diminuir o dano que está recebendo
 class ActionParry extends Action {
-  int _blockChance;
+  int _blockChance; //chance de desviar 
 
   ActionParry(String _name, this._blockChance) : super(_name);
 
-  void execute(Entity target) {
+  void execute(Entity target, {int? incomingDamage}) { //target o inimigo que está atacando
     // Precisa de um alvo?
-    // Como vamos checar isso realmente?
+    // Como vamos checar isso realmente? com o if coming == null soldado!
+
+
+      if (incomingDamage == null) {
+      print("404! Nenhum dano de entrada!");
+      return; // Sai da função se não houver dano para desviar
+    }
+
+    var random = Random(); // reutilizar o mesmo nome né :-)
+
+
+
+   if (random.nextInt(100) < _blockChance) { // Gera um número de 0 a 99
+
+      //se o numero ser menor que 49 o parry sera bem sucedido
+      //
+
+
+      // Parry bem-sucedido!
+      print('${this._executingEntity?.name} executou ${this.name} com sucesso!');
+      print('O ataque de ${target.name} (${incomingDamage} de dano) foi desviado/bloqueado!');
+      // Não faz nada, pois o dano já foi evitado aqui
+    } else {
+      // Parry falhou! O herói recebe o dano normalmente
+      print('${this._executingEntity?.name} tentou ${this.name}, mas falhou!');
+      print('${this._executingEntity?.name} sofreu ${incomingDamage} de dano!');
+      this._executingEntity?.takeDamage(incomingDamage); // Herói toma o dano
+    }
+
+
+
+
   }
 }
 
@@ -66,9 +99,13 @@ class ActionBlowAttack extends Action {
   int _chanceToStun;
 
   ActionBlowAttack(super._name, this._damage, this._chanceToStun);
-
-  void execute(Entity target) {
+                                    //essas variaveis são para o PARRY 
+  void execute(Entity target, {int? damageOverride, int? incomingDamage}) { //fazendo o blow attack
     // Precisa de um alvo?
     // Como vamos checar isso realmente?
+    target.takeDamage(this._damage);
+
+    print('${this._executingEntity?.name} desfere um Golpe Poderoso em ${target.name}, causando ${this._damage} de dano!'); //o dano esta definido lá no app.dart
+    print('${target.name} tomou ${this._damage} de dano. Vida restante: ${target.health}/${target.maxHealth}'); //blow attack será menos efetivo que dano normal?
   }
 }
