@@ -1,6 +1,7 @@
 import 'actions.dart';
+import 'items.dart';
 
-// tipo? inicia o tipo como null
+// tipo? inicia o ti  po como null
 // _ antes do nome inicia como privado
 abstract class Entity {
   final String _name; // Daria para setar como final?
@@ -12,6 +13,7 @@ abstract class Entity {
   List<Action>
   _actions; // TO-DO Ações que a entidade pode realizar no combate, falta criar elas
   List<String>? _status;
+  List<Item> _inventory = []; // INVENTARIO   
 
   // Constructors https://dart.dev/language/constructors
   // Contrutor nomeada, a subclasse não herda ele
@@ -36,6 +38,7 @@ abstract class Entity {
   get sprite => this._sprite;
   get actions => this._actions;
   get maxHealth => this._maxHealth;
+  get inventory => this._inventory;
 
   set setActions(List<Action> actions) {
     for (Action a in actions){
@@ -48,11 +51,28 @@ abstract class Entity {
     this._health -= damage;
     if(this._health <= 0){ //para quando der zero o bichao morrer né 
       this._health = 0;
-      print("Você venceu!");
+      print("Você venceu!"); //talvez devessemos mudar para o main?
     }
   }
 
+  //Heal metodo
+   void heal(int amount) {
+    _health += amount;
+    // Ensure health does not exceed maxHealth
+    if (_health > _maxHealth) {
+      _health = _maxHealth;
+    }
+    print('${_name} curou ${amount} de vida. HP atual: ${_health}/${_maxHealth}');
+  }
+
+
   bool get isAlive => this._health > 0; //vereficar se o biao ta morto
+
+  //metodo do inventario pae
+  void addItemToInventory(Item item) {
+    _inventory.add(item);
+    print('${_name} pegou um(a) ${item.name}!');
+  }
 }
 
 // https://dart.dev/language/extend

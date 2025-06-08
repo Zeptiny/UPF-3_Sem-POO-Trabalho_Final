@@ -19,7 +19,7 @@ void main(List<String> arguments) {
 
   // Level, vida e sprite padrão por enquanto
   // Ações padrões são: attack, parry e blow
-  Hero hero = Hero(name, description, 20, 0, "( ͡° ͜ʖ ͡°)", []);
+  Hero hero = Hero(name, description, 50, 0, "( ͡° ͜ʖ ͡°)", []);
   hero.setActions = [
     ActionAttack("Attack"),
     ActionBlowAttack("Blow Attack", 3, 70),
@@ -98,7 +98,7 @@ void main(List<String> arguments) {
           if (selectedAction is ActionParry) {
             var rng = Random();
             int minEnemyDamage = 1;
-            int maxEnemyDamage = 4;
+            int maxEnemyDamage = 3;
             int potentialDamage = minEnemyDamage + rng.nextInt(maxEnemyDamage - minEnemyDamage + 1);
 
             selectedAction.execute(level.enemies[0], incomingDamage: potentialDamage);
