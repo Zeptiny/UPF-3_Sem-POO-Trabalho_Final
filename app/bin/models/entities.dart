@@ -15,6 +15,19 @@ abstract class Entity {
   List<String>? _status;
   List<Item> _inventory = []; // INVENTARIO   
 
+
+   void heal(int amount) {
+    _health += amount;
+    
+    if (_health > _maxHealth) {
+      _health = _maxHealth;
+    }
+    print('${_name} curou ${amount} de vida. HP atual: ${_health}/${_maxHealth}');
+  }
+
+
+
+
   // Constructors https://dart.dev/language/constructors
   // Contrutor nomeada, a subclasse não herda ele
   Entity.full(
@@ -42,7 +55,7 @@ abstract class Entity {
 
   set setActions(List<Action> actions) {
     for (Action a in actions){
-      a.setEntity = this;
+      a.setEntity = this; //mensagem
       this._actions += [a];
     }
   }
@@ -56,7 +69,7 @@ abstract class Entity {
   }
 
   //Heal metodo
-   void heal(int amount) {
+   void healing(int amount) {
     _health += amount;
     // Ensure health does not exceed maxHealth
     if (_health > _maxHealth) {
@@ -111,4 +124,44 @@ class Enemy extends Entity {
   String getType() {
     return type;
   }
+
+
+
+
+
+
+    void useItem(Item itemToUse) {
+    if (_inventory.contains(itemToUse)) {
+      if (itemToUse is Potion) { 
+        Potion potion = itemToUse; 
+        potion.useEffect(this);
+        _inventory.remove(itemToUse); 
+        print('${itemToUse.name} foi consumida.');
+      } else {
+        
+        print('${itemToUse.name} não é uma poção ou não tem um efeito de uso direto neste contexto.');
+      }
+    } else {
+      print('${name} não tem ${itemToUse.name} no inventário.');
+    }
+  }
+  
+  
+  // Isso facilita a interação no terminal
+  void useItemByName(String itemName) {
+    Item? itemFound;
+    for (var item in _inventory) {
+      if (item.name.toLowerCase() == itemName.toLowerCase()) {
+        itemFound = item;
+        break;
+      }
+    }
+    if (itemFound != null) {
+      useItem(itemFound);
+    } else {
+      print('$itemName não encontrado no inventário de ${name}.');
+    }
+  }
 }
+
+
